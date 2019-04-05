@@ -60,6 +60,8 @@ java -jar http-server-demo-1.0.jar /Users/juansenoret/Documents/test 5000
 Your terminal should look something like this:
 ![http server launch](images/terminal.png)
 
+Of course you can copy the *.lar file to another folder and launch from there.
+
 - From your browser you can call the following URL (http://localhost:5000/) to check navigate through the folders
 
 Your browser should look something like this:
@@ -71,3 +73,8 @@ Your browser should look something like this:
 
 Your browser should look something like this:
 ![http server browser](images/browser_3.png)
+
+
+### UML Diagram
+
+![http server browser](images/UML-diagram.png)
