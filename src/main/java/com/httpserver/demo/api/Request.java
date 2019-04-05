@@ -30,7 +30,7 @@ public class Request {
      * @throws IOException if an error occurs
      */
     public Request(InputStream in, int port, boolean secure, Map<String, VirtualHost> hosts) throws IOException {
-        // MODIFY BY JUAN SENORET: Changed the Request class in order to pass port and hosts information
+        // MODIFIED BY JUAN SENORET: Changed the Request class in order to pass port and hosts information
         this.port = port;
         this.secure = secure;
         this.hosts = hosts;

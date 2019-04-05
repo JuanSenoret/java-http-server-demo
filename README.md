@@ -1,6 +1,7 @@
 # HTTP Server based on JLHTTP - Java Lightweight HTTP Server
 
-HTTP Server is a sample HTTP web server to demonstrate how to create a light HTTP server for listing of the files and subdirectories in the specified directory
+HTTP Server is a sample HTTP web server to demonstrate how to create a light HTTP server for listing of the files and subdirectories in the specified directory.
+I have modified the complete JLHTTP implementation in order to split properly all the classes and interfaces.
 
 
 ## Getting Started

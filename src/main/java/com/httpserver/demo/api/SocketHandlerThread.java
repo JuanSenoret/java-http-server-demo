@@ -18,7 +18,7 @@ public class SocketHandlerThread extends Thread {
     ServerSocket serv;
     protected Utility utility;
     protected Map<String, VirtualHost> hosts;
-    // MODIFY BY JUAN SENORET: Constructor changed to add relevant parameters to call get port and host information
+    // MODIFIED BY JUAN SENORET: Constructor changed to add relevant parameters to call get port and host information
     public SocketHandlerThread(int port, boolean secure, Map<String, VirtualHost> hosts, ServerSocket serv, int socketTimeout, Executor executor) {
         this.port = port;
         this.secure = secure;
@@ -83,7 +83,7 @@ public class SocketHandlerThread extends Thread {
             req = null;
             resp = new Response(out);
             try {
-                // MODIFY BY JUAN SENORET: Changed the Request class in order to pass port and hosts information
+                // MODIFIED BY JUAN SENORET: Changed the Request class in order to pass port and hosts information
                 req = new Request(in, port, secure, hosts);
                 utility.handleTransaction(req, resp);
             } catch (Throwable t) { // unhandled errors (not normal error responses like 404)

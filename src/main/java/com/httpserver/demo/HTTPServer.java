@@ -111,7 +111,7 @@ public class HTTPServer {
             for (String alias : host.getAliases())
                 hosts.put(alias, host);
         // start handling incoming connections
-        // MODIFY BY JUAN SENORET: Added port, secure, hosts, serv, socketTimeout, executor parameters respect to the original implementation.
+        // MODIFIED BY JUAN SENORET: Added port, secure, hosts, serv, socketTimeout, executor parameters respect to the original implementation.
         // I have organize the project code in files and avoid a thousend of line file.
         new SocketHandlerThread(port, secure, hosts, serv, socketTimeout, executor).start();
     }
@@ -153,6 +153,7 @@ public class HTTPServer {
             HTTPServer server = new HTTPServer(port);
             VirtualHost host = server.getVirtualHost(null); // default host
             host.setAllowGeneratedIndex(true); // with directory index pages
+            // MODIFIED BY JUAN SENORET: Added
             // Add Endpoints to the server
             host.addContext("/", new FileContextHandler(dir));
             host.addContext("/api/keep-alive", new ContextHandler() {

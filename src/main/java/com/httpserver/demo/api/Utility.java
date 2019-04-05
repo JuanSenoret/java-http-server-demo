@@ -968,7 +968,7 @@ public class Utility {
      * @return the appropriate response status for the request
      */
     public static int getConditionalStatusResponse(Request req, long lastModified, String etag) {
-        // MODIFY BY JUAN SENORET: Extension 1 of the sample
+        // MODIFIED BY JUAN SENORET: Extension 1 of the sample
         Headers headers = req.getHeaders();
         // If-Match
         String header = headers.get("If-Match");
