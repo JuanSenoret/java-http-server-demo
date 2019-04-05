@@ -1,0 +1,27 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1554467426201
+Build-Jdk: 1.8.0_171
+Built-By: Amichai Rothman
+Bundle-Description: HTTP Server Demo based on Lightweight HTTP Server
+Bundle-DocURL: http://www.freeutils.net/
+Bundle-License: http://www.gnu.org/licenses/gpl-2.0.html, LICENSE.commer
+ cial.txt
+Bundle-ManifestVersion: 2
+Bundle-Name: HTTPServerDemo
+Bundle-SymbolicName: net.freeutils
+Bundle-Vendor: freeutils.net
+Bundle-Version: 1.0
+Created-By: Apache Maven Bundle Plugin
+Implementation-Title: HTTPServerDemo
+Implementation-Vendor: freeutils.net
+Implementation-Vendor-Id: net.freeutils
+Implementation-Version: 1.0
+Import-Package: javax.net,javax.net.ssl
+Main-Class: com.httpserver.demo.HTTPServer
+Originally-Created-By: Apache Maven Bundle Plugin
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.5))"
+Specification-Title: HTTPServerDemo
+Specification-Vendor: freeutils.net
+Specification-Version: 1.0
+Tool: Bnd-2.3.0.201405100607
+X-Vendor-URL: http://www.freeutils.net
