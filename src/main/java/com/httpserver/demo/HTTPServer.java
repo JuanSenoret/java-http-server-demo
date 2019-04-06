@@ -135,37 +135,38 @@ public class HTTPServer {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        // MODIFIED BY JUAN SENORET:
         Utility utility = new Utility();
         try {
             if (args.length == 0) {
                 System.err.printf("Usage: java [-options] %s <directory> [port]%n", HTTPServer.class.getName());
-                return;
-            }
-            File dir = new File(args[0]);
-            if (!dir.canRead()) {
-                throw new FileNotFoundException(dir.getAbsolutePath());
-            }
-            int port = args.length < 2 ? 4200 : Integer.parseInt(args[1]);
-            // set up server
-            for (File f : Arrays.asList(new File("/etc/mime.types"), new File(dir, ".mime.types")))
-                if (f.exists())
-                    utility.addContentTypes(f);
-            HTTPServer server = new HTTPServer(port);
-            VirtualHost host = server.getVirtualHost(null); // default host
-            host.setAllowGeneratedIndex(true); // with directory index pages
-            // MODIFIED BY JUAN SENORET: Added
-            // Add Endpoints to the server
-            host.addContext("/", new FileContextHandler(dir));
-            host.addContext("/api/keep-alive", new ContextHandler() {
-                public int serve(Request req, Response resp) throws IOException {
-                    long now = System.currentTimeMillis();
-                    resp.getHeaders().add("Content-Type", "text/plain");
-                    resp.send(200, String.format("Keep Alive %tF %<tT", now));
-                    return 0;
+                //return;
+            } else {
+                File dir = new File(args[0]);
+                if (!dir.canRead()) {
+                    throw new FileNotFoundException(dir.getAbsolutePath());
                 }
-            });
-            server.start();
-            System.out.println("HTTPServer is listening on following port " + port);
+                int port = args.length < 2 ? 4200 : Integer.parseInt(args[1]);
+                // set up server
+                for (File f : Arrays.asList(new File("/etc/mime.types"), new File(dir, ".mime.types")))
+                    if (f.exists())
+                        utility.addContentTypes(f);
+                HTTPServer server = new HTTPServer(port);
+                VirtualHost host = server.getVirtualHost(null); // default host
+                host.setAllowGeneratedIndex(true); // with directory index pages
+                // Add Endpoints to the server
+                host.addContext("/", new FileContextHandler(dir));
+                host.addContext("/api/keep-alive", new ContextHandler() {
+                    public int serve(Request req, Response resp) throws IOException {
+                        long now = System.currentTimeMillis();
+                        resp.getHeaders().add("Content-Type", "text/plain");
+                        resp.send(200, String.format("Keep Alive %tF %<tT", now));
+                        return 0;
+                    }
+                });
+                server.start();
+                System.out.println("HTTPServer is listening on following port " + port);
+            }
         } catch(Exception e) {
             System.err.println("error: " + e);
         }
