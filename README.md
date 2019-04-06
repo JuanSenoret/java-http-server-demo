@@ -76,6 +76,6 @@ Your browser should look something like this:
 ![http server browser](images/browser_3.png)
 
 
-### UML Diagram
+### UML Class Diagram
 
 ![http server browser](images/UML-diagram.png)
