@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1554537343537
+Bnd-LastModified: 1554970485648
 Build-Jdk: 1.8.0_171
 Built-By: Amichai Rothman
 Bundle-Description: HTTP Server Demo based on Lightweight HTTP Server
@@ -16,7 +16,8 @@ Implementation-Title: HTTPServerDemo
 Implementation-Vendor: freeutils.net
 Implementation-Vendor-Id: net.freeutils
 Implementation-Version: 1.0
-Import-Package: javax.net,javax.net.ssl
+Import-Package: com.google.common.base;version="[27.1,28)",com.google.co
+ mmon.io;version="[27.1,28)",javax.net,javax.net.ssl
 Main-Class: com.httpserver.demo.HTTPServer
 Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.5))"
 Specification-Title: HTTPServerDemo

@@ -15,6 +15,7 @@ import com.httpserver.demo.api.Request;
 import com.httpserver.demo.api.Response;
 import com.httpserver.demo.api.ContextHandler;
 import com.httpserver.demo.api.FileContextHandler;
+import com.httpserver.demo.api.WallFrontEndContextHandler;
 import com.httpserver.demo.api.Utility;
 
 public class HTTPServer {
@@ -146,7 +147,7 @@ public class HTTPServer {
                 if (!dir.canRead()) {
                     throw new FileNotFoundException(dir.getAbsolutePath());
                 }
-                int port = args.length < 2 ? 4200 : Integer.parseInt(args[1]);
+                int port = args.length < 2 ? 4100 : Integer.parseInt(args[1]);
                 // set up server
                 for (File f : Arrays.asList(new File("/etc/mime.types"), new File(dir, ".mime.types")))
                     if (f.exists())
@@ -156,6 +157,7 @@ public class HTTPServer {
                 host.setAllowGeneratedIndex(true); // with directory index pages
                 // Add Endpoints to the server
                 host.addContext("/", new FileContextHandler(dir));
+                host.addContext("/wall", new WallFrontEndContextHandler());
                 host.addContext("/api/keep-alive", new ContextHandler() {
                     public int serve(Request req, Response resp) throws IOException {
                         long now = System.currentTimeMillis();

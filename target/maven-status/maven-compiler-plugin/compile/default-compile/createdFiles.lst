@@ -8,6 +8,7 @@ com/httpserver/demo/api/ChunkedOutputStream.class
 com/httpserver/demo/api/SocketHandlerThread$1.class
 com/httpserver/demo/api/Header.class
 com/httpserver/demo/api/LimitedInputStream.class
+com/httpserver/demo/api/WallFrontEndContextHandler.class
 com/httpserver/demo/api/Context.class
 com/httpserver/demo/api/MethodContextHandler.class
 com/httpserver/demo/api/Response$1.class

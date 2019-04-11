@@ -12,4 +12,5 @@
 /Users/juansenoret/Documents/Development/java/workspace/http-server-demo_v2/src/main/java/com/httpserver/demo/api/Context.java
 /Users/juansenoret/Documents/Development/java/workspace/http-server-demo_v2/src/main/java/com/httpserver/demo/api/ChunkedInputStream.java
 /Users/juansenoret/Documents/Development/java/workspace/http-server-demo_v2/src/main/java/com/httpserver/demo/api/LimitedInputStream.java
+/Users/juansenoret/Documents/Development/java/workspace/http-server-demo_v2/src/main/java/com/httpserver/demo/api/WallFrontEndContextHandler.java
 /Users/juansenoret/Documents/Development/java/workspace/http-server-demo_v2/src/main/java/com/httpserver/demo/api/ChunkedOutputStream.java
