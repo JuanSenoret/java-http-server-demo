@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Bnd-LastModified: 1554970485648
+Bnd-LastModified: 1554975715326
 Build-Jdk: 1.8.0_171
 Built-By: Amichai Rothman
 Bundle-Description: HTTP Server Demo based on Lightweight HTTP Server

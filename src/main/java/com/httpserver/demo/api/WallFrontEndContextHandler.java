@@ -20,11 +20,19 @@ public class WallFrontEndContextHandler implements ContextHandler {
         if (relativePath.endsWith("/")) {
             return 404; // non-directory ending with slash (File constructor removed it)
         } else {
-            String fileName = "dist/index.html";
-            String result = readResource(fileName, Charsets.UTF_8);
-            resp.getHeaders().add("Content-Type", "text/html");
-            resp.send(200, result);
-            return 200;
+            String result = "";
+            if (relativePath.length() == 0) {
+                String fileName = "dist/index.html";
+                result = readResource(fileName, Charsets.UTF_8);
+                resp.getHeaders().add("Content-Type", "text/html");
+                resp.send(200, result);
+                return 200;
+            } else {
+                resp.getHeaders().add("Content-Type", "text/js");
+                result = readResource("dist" + relativePath, Charsets.UTF_8);
+                resp.send(200, result);
+                return 200;
+            }
         }
     }
 
