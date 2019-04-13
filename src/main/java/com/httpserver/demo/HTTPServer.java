@@ -148,7 +148,7 @@ public class HTTPServer {
                 if (!dir.canRead()) {
                     throw new FileNotFoundException(dir.getAbsolutePath());
                 }
-                int port = args.length < 2 ? 5000 : Integer.parseInt(args[1]);
+                int port = 5000;
                 // set up server
                 for (File f : Arrays.asList(new File("/etc/mime.types"), new File(dir, ".mime.types")))
                     if (f.exists())

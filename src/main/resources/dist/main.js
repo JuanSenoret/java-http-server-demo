@@ -58,24 +58,46 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_backend_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/backend.service */ "./src/app/services/backend.service.ts");
+/* harmony import */ var _snackbar_snackbar_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../snackbar/snackbar.component */ "./src/app/snackbar/snackbar.component.ts");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+
+
 
 
 
 var AddCommentComponent = /** @class */ (function () {
-    function AddCommentComponent(backendService) {
+    function AddCommentComponent(backendService, snackBar) {
         this.backendService = backendService;
+        this.snackBar = snackBar;
         this.nameValue = '';
         this.commentValue = '';
+        this.configSnackbarSuccess = {
+            panelClass: 'snackbar-style-success',
+            duration: 10000,
+            verticalPosition: 'bottom'
+        };
+        this.configSnackbarError = {
+            panelClass: 'snackbar-style-error',
+            duration: 10000,
+            verticalPosition: 'bottom'
+        };
     }
     AddCommentComponent.prototype.ngOnInit = function () {
     };
     AddCommentComponent.prototype.submit = function () {
+        var _this = this;
         this.addComment = {
             username: this.nameValue,
             comment: this.commentValue
         };
         this.backendService.addComment(this.addComment).subscribe(function (response) {
-            console.log(response);
+            console.log(response['status']);
+            if (response['status'] && response['status'] === 'DONE') {
+                _this.snackBar.openFromComponent(_snackbar_snackbar_component__WEBPACK_IMPORTED_MODULE_3__["SnackbarComponent"], tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({ data: _this.nameValue + "'s comment successfully added" }, _this.configSnackbarSuccess));
+            }
+            else {
+                _this.snackBar.openFromComponent(_snackbar_snackbar_component__WEBPACK_IMPORTED_MODULE_3__["SnackbarComponent"], tslib__WEBPACK_IMPORTED_MODULE_0__["__assign"]({ data: "Error: Comment NOT added" }, _this.configSnackbarError));
+            }
         });
     };
     AddCommentComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -84,7 +106,8 @@ var AddCommentComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./add-comment.component.html */ "./src/app/add-comment/add-comment.component.html"),
             styles: [__webpack_require__(/*! ./add-comment.component.scss */ "./src/app/add-comment/add-comment.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_backend_service__WEBPACK_IMPORTED_MODULE_2__["BackendService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_services_backend_service__WEBPACK_IMPORTED_MODULE_2__["BackendService"],
+            _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatSnackBar"]])
     ], AddCommentComponent);
     return AddCommentComponent;
 }());
@@ -213,6 +236,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _add_comment_add_comment_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./add-comment/add-comment.component */ "./src/app/add-comment/add-comment.component.ts");
 /* harmony import */ var _comments_wall_comments_wall_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./comments-wall/comments-wall.component */ "./src/app/comments-wall/comments-wall.component.ts");
 /* harmony import */ var _services_backend_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./services/backend.service */ "./src/app/services/backend.service.ts");
+/* harmony import */ var _snackbar_snackbar_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./snackbar/snackbar.component */ "./src/app/snackbar/snackbar.component.ts");
+
 
 
 
@@ -237,7 +262,8 @@ var AppModule = /** @class */ (function () {
                 _app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"],
                 _side_nav_side_nav_component__WEBPACK_IMPORTED_MODULE_7__["SideNavComponent"],
                 _add_comment_add_comment_component__WEBPACK_IMPORTED_MODULE_12__["AddCommentComponent"],
-                _comments_wall_comments_wall_component__WEBPACK_IMPORTED_MODULE_13__["CommentsWallComponent"]
+                _comments_wall_comments_wall_component__WEBPACK_IMPORTED_MODULE_13__["CommentsWallComponent"],
+                _snackbar_snackbar_component__WEBPACK_IMPORTED_MODULE_15__["SnackbarComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
@@ -254,7 +280,11 @@ var AppModule = /** @class */ (function () {
                 _angular_material__WEBPACK_IMPORTED_MODULE_9__["MatFormFieldModule"],
                 _angular_material__WEBPACK_IMPORTED_MODULE_9__["MatInputModule"],
                 _angular_flex_layout__WEBPACK_IMPORTED_MODULE_10__["FlexLayoutModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_11__["FormsModule"]
+                _angular_forms__WEBPACK_IMPORTED_MODULE_11__["FormsModule"],
+                _angular_material__WEBPACK_IMPORTED_MODULE_9__["MatSnackBarModule"]
+            ],
+            entryComponents: [
+                _snackbar_snackbar_component__WEBPACK_IMPORTED_MODULE_15__["SnackbarComponent"],
             ],
             providers: [_services_backend_service__WEBPACK_IMPORTED_MODULE_14__["BackendService"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]]
@@ -444,6 +474,68 @@ var SideNavComponent = /** @class */ (function () {
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_cdk_layout__WEBPACK_IMPORTED_MODULE_2__["BreakpointObserver"]])
     ], SideNavComponent);
     return SideNavComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/snackbar/snackbar.component.html":
+/*!**************************************************!*\
+  !*** ./src/app/snackbar/snackbar.component.html ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div layout=\"row\" layout-align=\"end none\">\n  <span class=\"example-pizza-party\">\n    {{data}}\n  </span>\n  <button mat-raised-button\n          class=\"snackbar-close-button\"\n          (click)=\"snackBarRef.dismiss()\">close</button>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/snackbar/snackbar.component.scss":
+/*!**************************************************!*\
+  !*** ./src/app/snackbar/snackbar.component.scss ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".example-pizza-party {\n  color: #363836; }\n\n.snackbar-close-button {\n  color: #103cb4; }\n\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9qdWFuc2Vub3JldC9Eb2N1bWVudHMvRGV2ZWxvcG1lbnQvamF2YS93b3Jrc3BhY2UvaHR0cC1zZXJ2ZXItZGVtb192Mi9XYWxsQ2xpZW50QXBwL3NyYy9hcHAvc25hY2tiYXIvc25hY2tiYXIuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxjQUFzQixFQUFBOztBQUV4QjtFQUNFLGNBQXVCLEVBQUEiLCJmaWxlIjoic3JjL2FwcC9zbmFja2Jhci9zbmFja2Jhci5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5leGFtcGxlLXBpenphLXBhcnR5IHtcbiAgY29sb3I6IHJnYig1NCwgNTYsIDU0KTtcbn1cbi5zbmFja2Jhci1jbG9zZS1idXR0b24ge1xuICBjb2xvcjogcmdiKDE2LCA2MCwgMTgwKTtcblxufVxuIl19 */"
+
+/***/ }),
+
+/***/ "./src/app/snackbar/snackbar.component.ts":
+/*!************************************************!*\
+  !*** ./src/app/snackbar/snackbar.component.ts ***!
+  \************************************************/
+/*! exports provided: SnackbarComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SnackbarComponent", function() { return SnackbarComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+
+
+
+var SnackbarComponent = /** @class */ (function () {
+    function SnackbarComponent(data, snackBarRef) {
+        this.data = data;
+        this.snackBarRef = snackBarRef;
+    }
+    SnackbarComponent.prototype.ngOnInit = function () {
+        console.log(this.data);
+    };
+    SnackbarComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-snackbar',
+            template: __webpack_require__(/*! ./snackbar.component.html */ "./src/app/snackbar/snackbar.component.html"),
+            styles: [__webpack_require__(/*! ./snackbar.component.scss */ "./src/app/snackbar/snackbar.component.scss")]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_material__WEBPACK_IMPORTED_MODULE_2__["MAT_SNACK_BAR_DATA"])),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [Object, _angular_material__WEBPACK_IMPORTED_MODULE_2__["MatSnackBarRef"]])
+    ], SnackbarComponent);
+    return SnackbarComponent;
 }());
 
 

@@ -1,7 +1,9 @@
-# HTTP Server based on JLHTTP - Java Lightweight HTTP Server
+# Adobe Wall served through an Lightweight HTTP Server
 
-HTTP Server is a sample HTTP web server to demonstrate how to create a light HTTP server for listing of the files and subdirectories in the specified directory.
-I have modified the complete JLHTTP implementation in order to split properly all the classes and interfaces.
+In this project you will check how to serve an Angular 7 application using a light weight HTTTP server implemented in JAVA.
+You will find two web application served through the same light weight HTTTP server:
+- Adobe Wall app: which is a web app to add comment to a MongoDB database
+- Finder app: which you can use to serve your files.
 
 
 ## Getting Started
@@ -10,7 +12,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Please make sure you've already installed JRE free of charge from Oracle.
+Please make sure you've already installed JRE free of charge from Oracle and MongoDB.
 
 - Go to [http://www.oracle.com/technetwork/java/javase/downloads/index.html]
 
@@ -28,6 +30,7 @@ You can use either the JDK or JRE. The JDK includes the JRE. Do not use any non-
 java -version
 ```
 
+- To install MongoDB go to [https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/] and follow the instructions
 
 ### Installing and user guide
 
@@ -45,17 +48,18 @@ git clone https://github.com/JuanSenoret/java-http-server-demo.git
 cd lib
 ```
 
+- Be sure you has the MongoDB daemon running and your database doesn't require any credential to connect to it.
+
 - Launch the HTTP Server Demo using the *.jar file, issue the following command
 
 ```
-java -jar http-server-demo-1.0.jar <folder path> <port number>
+java -jar http-server-demo-1.0.jar <folder path>
 ```
 Folder path argument could be an absolute path or a relative path of a folder located in the same folder of the *.jar file.
-Port number is optional (default port is 4200).
 
 E.g.
 ```
-java -jar http-server-demo-1.0.jar /Users/juansenoret/Documents/test 5000
+java -jar http-server-demo-1.0.jar /Users/juansenoret/Documents/test
 ```
 
 Your terminal should look something like this:
@@ -63,7 +67,30 @@ Your terminal should look something like this:
 
 Of course you can copy the *.jar file to another folder and launch from there.
 
-- From your browser you can call the following URL (http://localhost:5000/) to check navigate through the folders
+- From your browser you can call the following URL (http://localhost:5000/) to open the Adobe Wall App. In this web app you
+can add your comment to the Adobe wall
+
+Your browser should look something like this:
+![http server adobe wall](images/adobe-wall-app-add-comment-page-1.png)
+
+![http server adobe wall](images/adobe-wall-app-add-comment-page-2.png)
+
+In that page you can add a new comment to the MongoDB database.
+
+After added a comment cann get all the stored comments in the next page:
+![http server adobe fecth comments](images/adobe-wall-app-get-comments-page.png)
+
+- You can call the GET REST API to fetch the comments from the MongoDB database. To do that you can use Postman tool.
+
+Your call via Postman should look something like this:
+![postman call](images/postman-get-rest-api.png)
+
+- You can call the POST REST API to add a new comment to the MongoDB database.
+
+Your call via Postman should look something like this:
+![postman call](images/postman-post-rest-api.png)
+
+- From your browser you can call the following URL (http://localhost:5000/finder) to check and navigate through the folders
 
 Your browser should look something like this:
 ![http server browser](images/browser_1.png)
@@ -74,6 +101,7 @@ Your browser should look something like this:
 
 Your browser should look something like this:
 ![http server browser](images/browser_3.png)
+
 
 
 ### UML Class Diagram

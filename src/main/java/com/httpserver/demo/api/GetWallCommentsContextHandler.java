@@ -22,7 +22,7 @@ public class GetWallCommentsContextHandler implements ContextHandler {
     private MongoCollection<Document> collection = null;
     private JSONObject jsonResponse = new JSONObject();
 
-    public GetWallCommentsContextHandler() throws IOException {
+    public GetWallCommentsContextHandler() {
     }
 
     public int serve(Request req, Response resp) throws IOException {
