@@ -1,0 +1,15 @@
+.custom-comments-content{
+  padding-top: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.user-image {
+  background-image: url('http://xpertlab.com/wp-content/uploads/2014/04/20151012_561bae5f0713e.png');
+  background-size: cover;
+}
+
+.custom-comment {
+  display: flex;
+  flex-direction: column;
+}

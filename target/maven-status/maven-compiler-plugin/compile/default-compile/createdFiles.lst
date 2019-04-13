@@ -12,7 +12,9 @@ com/httpserver/demo/api/ContextHandler.class
 com/httpserver/demo/api/VirtualHost.class
 com/httpserver/demo/api/SocketHandlerThread$1.class
 com/httpserver/demo/api/Header.class
+com/httpserver/demo/api/GetWallCommentsContextHandler.class
 com/httpserver/demo/api/LimitedInputStream.class
+com/httpserver/demo/api/AddWallCommentContextHandler.class
 com/httpserver/demo/api/Context.class
 com/httpserver/demo/api/Response.class
 com/httpserver/demo/api/FileContextHandler.class

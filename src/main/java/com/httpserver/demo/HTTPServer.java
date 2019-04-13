@@ -16,6 +16,8 @@ import com.httpserver.demo.api.Response;
 import com.httpserver.demo.api.ContextHandler;
 import com.httpserver.demo.api.FileContextHandler;
 import com.httpserver.demo.api.WallFrontEndContextHandler;
+import com.httpserver.demo.api.AddWallCommentContextHandler;
+import com.httpserver.demo.api.GetWallCommentsContextHandler;
 import com.httpserver.demo.api.Utility;
 
 public class HTTPServer {
@@ -42,11 +44,11 @@ public class HTTPServer {
     }
 
     /**
-     * Constructs an HTTPServer which can accept connections on the default HTTP port 4200.
+     * Constructs an HTTPServer which can accept connections on the default HTTP port 5000.
      * Note: the {@link #start()} method must be called to start accepting connections.
      */
     public HTTPServer() {
-        this(4200);
+        this(5000);
     }
 
     /**
@@ -141,13 +143,12 @@ public class HTTPServer {
         try {
             if (args.length == 0) {
                 System.err.printf("Usage: java [-options] %s <directory> [port]%n", HTTPServer.class.getName());
-                //return;
             } else {
                 File dir = new File(args[0]);
                 if (!dir.canRead()) {
                     throw new FileNotFoundException(dir.getAbsolutePath());
                 }
-                int port = args.length < 2 ? 4100 : Integer.parseInt(args[1]);
+                int port = args.length < 2 ? 5000 : Integer.parseInt(args[1]);
                 // set up server
                 for (File f : Arrays.asList(new File("/etc/mime.types"), new File(dir, ".mime.types")))
                     if (f.exists())
@@ -156,8 +157,10 @@ public class HTTPServer {
                 VirtualHost host = server.getVirtualHost(null); // default host
                 host.setAllowGeneratedIndex(true); // with directory index pages
                 // Add Endpoints to the server
-                host.addContext("/", new FileContextHandler(dir));
-                host.addContext("/wall", new WallFrontEndContextHandler());
+                host.addContext("/finder", new FileContextHandler(dir));
+                host.addContext("/", new WallFrontEndContextHandler());
+                host.addContext("/add-wall-comment", new AddWallCommentContextHandler(), "POST");
+                host.addContext("/get-wall-comments", new GetWallCommentsContextHandler(), "GET");
                 host.addContext("/api/keep-alive", new ContextHandler() {
                     public int serve(Request req, Response resp) throws IOException {
                         long now = System.currentTimeMillis();
@@ -165,7 +168,7 @@ public class HTTPServer {
                         resp.send(200, String.format("Keep Alive %tF %<tT", now));
                         return 0;
                     }
-                });
+                }, "GET");
                 server.start();
                 System.out.println("HTTPServer is listening on following port " + port);
             }

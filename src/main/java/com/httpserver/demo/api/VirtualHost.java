@@ -59,7 +59,7 @@ public class VirtualHost {
          */
         public void addHandler(ContextHandler handler, String... methods) {
             if (methods.length == 0)
-                methods = new String[] { "GET" };
+                methods = new String[] { "GET", "POST" };
             for (String method : methods) {
                 handlers.put(method, handler);
                 VirtualHost.this.methods.add(method); // it's now supported by server

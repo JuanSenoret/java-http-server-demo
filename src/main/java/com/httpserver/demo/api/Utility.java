@@ -1,5 +1,7 @@
 package com.httpserver.demo.api;
 
+import org.json.JSONObject;
+
 import java.io.*;
 import java.net.*;
 import java.text.ParseException;
@@ -351,16 +353,22 @@ public class Utility {
             req.method = "GET"; // identical to a GET
             resp.setDiscardBody(true); // process normally but discard body
             serve(req, resp);
+        } else if(method.equals("POST")) {
+            serve(req, resp); // method is handled by context handler (or 404)
         } else if (method.equals("TRACE")) { // default TRACE handler
             handleTrace(req, resp);
         } else {
             Set<String> methods = new LinkedHashSet<String>();
-            methods.addAll(Arrays.asList("GET", "HEAD", "TRACE", "OPTIONS")); // built-in methods
+            methods.addAll(Arrays.asList("POST", "GET", "HEAD", "TRACE", "OPTIONS")); // built-in methods
             // "*" is a special server-wide (no-context) request supported by OPTIONS
             boolean isServerOptions = req.getPath().equals("*") && method.equals("OPTIONS");
             methods.addAll(isServerOptions ? req.getVirtualHost().getMethods() : handlers.keySet());
             resp.getHeaders().add("Allow", join(", ", methods));
             if (method.equals("OPTIONS")) { // default OPTIONS handler
+                resp.getHeaders().add("Access-Control-Allow-Origin", "*");
+                resp.getHeaders().add("Access-Control-Allow-Credentials", "true");
+                resp.getHeaders().add("Access-Control-Allow-Methods", "POST");
+                resp.getHeaders().add("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
                 resp.getHeaders().add("Content-Length", "0"); // RFC2616#9.2
                 resp.sendHeaders(200);
             } else if (req.getVirtualHost().getMethods().contains(method)) {
@@ -686,8 +694,9 @@ public class Utility {
      *         or an empty list if there are none
      */
     public static List<String[]> parseParamsList(String s) {
-        if (s == null || s.length() == 0)
+        if (s == null || s.length() == 0) {
             return Collections.emptyList();
+        }
         List<String[]> params = new ArrayList<String[]>(8);
         for (String pair : split(s, "&", -1)) {
             int pos = pair.indexOf('=');
@@ -699,6 +708,40 @@ public class Utility {
                 if (name.length() > 0)
                     params.add(new String[] { name, val });
             } catch (UnsupportedEncodingException ignore) {} // never thrown
+        }
+        return params;
+    }
+
+    /**
+     * Parses name-value pair parameters from the given "x-www-form-urlencoded"
+     * MIME-type string. This is the encoding used both for parameters passed
+     * as the query of an HTTP GET method, and as the content of HTML forms
+     * submitted using the HTTP POST method (as long as they use the default
+     * "application/json" encoding in their ENCTYPE attribute).
+     * UTF-8 encoding is assumed.
+     * <p>
+     * The parameters are returned as a list of string arrays, each containing
+     * the parameter name as the first element and its corresponding value
+     * as the second element (or an empty string if there is no value).
+     * <p>
+     * The list retains the original order of the parameters.
+     *
+     * @param s an "application/json" string
+     * @return the parameter name-value pairs parsed from the given string,
+     *         or an empty list if there are none
+     */
+    // ADDED BY JUAN SENORET:
+    public static List<String[]> parseParamsListApplicationJson(String s) {
+        if (s == null || s.length() == 0) {
+            return Collections.emptyList();
+        }
+        List<String[]> params = new ArrayList<String[]>(8);
+        JSONObject jsonBodyParams = new JSONObject(s);
+        Iterator<String> keys = jsonBodyParams.keys();
+        while(keys.hasNext()) {
+            String key = keys.next();
+            String value = (String) jsonBodyParams.get(key);
+            params.add(new String[] { key, value });
         }
         return params;
     }

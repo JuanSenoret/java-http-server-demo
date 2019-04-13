@@ -20,19 +20,38 @@ public class WallFrontEndContextHandler implements ContextHandler {
         if (relativePath.endsWith("/")) {
             return 404; // non-directory ending with slash (File constructor removed it)
         } else {
+            System.out.println(relativePath);
             String result = "";
-            if (relativePath.length() == 0) {
+
+            if (relativePath.indexOf(".html") >=0) {
+                String fileName = "dist/index.html";
+                result = readResource(fileName, Charsets.UTF_8);
+                resp.getHeaders().add("Content-Type", "text/html");
+            } else if(relativePath.indexOf(".js") >= 0) {
+                resp.getHeaders().add("Content-Type", "text/javascript");
+                result = readResource("dist" + relativePath, Charsets.UTF_8);
+            } else if(relativePath.indexOf(".jpg") >= 0) {
+                resp.getHeaders().add("Content-Type", "image/jpg");
+                result = readResource("dist" + relativePath, Charsets.UTF_8);
+            }
+            resp.send(200, result);
+            return 200;
+            /*if (relativePath.length() == 0) {
                 String fileName = "dist/index.html";
                 result = readResource(fileName, Charsets.UTF_8);
                 resp.getHeaders().add("Content-Type", "text/html");
                 resp.send(200, result);
                 return 200;
             } else {
-                resp.getHeaders().add("Content-Type", "text/js");
-                result = readResource("dist" + relativePath, Charsets.UTF_8);
+                if (relativePath.indexOf(".js") >= 0) {
+                    resp.getHeaders().add("Content-Type", "text/javascript");
+                } else if (relativePath.indexOf(".png") >= 0){
+                    resp.getHeaders().add("Content-Type", "image/png");
+                }
+                result = readResource("dist/assets/img" + relativePath, Charsets.UTF_8);
                 resp.send(200, result);
                 return 200;
-            }
+            }*/
         }
     }
 

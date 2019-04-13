@@ -168,12 +168,23 @@ public class Request {
         List<String[]> queryParams = utility.parseParamsList(uri.getRawQuery());
         List<String[]> bodyParams = Collections.emptyList();
         String ct = headers.get("Content-Type");
-        if (ct != null && ct.toLowerCase(Locale.US).startsWith("application/x-www-form-urlencoded"))
+        // MODIFIED BY JUAN SENORET: to allow to accept Content-Type: application/json
+        /*if (ct != null && (ct.toLowerCase(Locale.US).startsWith("application/x-www-form-urlencoded"))) {
             bodyParams = utility.parseParamsList(utility.readToken(body, -1, "UTF-8", 2097152)); // 2MB limit
-        if (bodyParams.isEmpty())
+        }*/
+        if (ct != null) {
+            if (ct.toLowerCase(Locale.US).startsWith("application/x-www-form-urlencoded")) {
+                bodyParams = utility.parseParamsList(utility.readToken(body, -1, "UTF-8", 2097152)); // 2MB limit
+            } else if (ct.toLowerCase(Locale.US).startsWith("application/json")) {
+                bodyParams = utility.parseParamsListApplicationJson(utility.readToken(body, -1, "UTF-8", 2097152)); // 2MB limit
+            }
+        }
+        if (bodyParams.isEmpty()) {
             return queryParams;
-        if (queryParams.isEmpty())
+        }
+        if (queryParams.isEmpty()) {
             return bodyParams;
+        }
         queryParams.addAll(bodyParams);
         return queryParams;
     }
