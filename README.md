@@ -1,7 +1,7 @@
 # Adobe Wall served through an Lightweight HTTP Server
 
 In this project you will check how to serve an Angular 7 application using a light weight HTTTP server implemented in JAVA.
-You will find two web application served through the same light weight HTTTP server:
+You will find two web applications served through the same light weight HTTTP server:
 - Adobe Wall app: which is a web app to add comment to a MongoDB database
 - Finder app: which you can use to serve your files.
 
@@ -10,7 +10,7 @@ You will find two web application served through the same light weight HTTTP ser
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### Prerequisites
+### Pre-requisites
 
 Please make sure you've already installed JRE free of charge from Oracle and MongoDB.
 
@@ -73,11 +73,10 @@ can add your comment to the Adobe wall
 Your browser should look something like this:
 ![http server adobe wall](images/adobe-wall-app-add-comment-page-1.png)
 
+In this page you can add a new comment to the MongoDB database.
 ![http server adobe wall](images/adobe-wall-app-add-comment-page-2.png)
 
-In that page you can add a new comment to the MongoDB database.
-
-After added a comment cann get all the stored comments in the next page:
+After added a comment you can fetch all the stored comments in the next page:
 ![http server adobe fecth comments](images/adobe-wall-app-get-comments-page.png)
 
 - You can call the GET REST API to fetch the comments from the MongoDB database. To do that you can use Postman tool.
