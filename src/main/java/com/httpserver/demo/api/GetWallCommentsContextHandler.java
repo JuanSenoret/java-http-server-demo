@@ -56,8 +56,8 @@ public class GetWallCommentsContextHandler implements ContextHandler {
             jsonResponse.put("error", "MongoDB error");
             jsonResponse.put("status", "ERROR");
             jsonResponse.put("message", "");
-            resp.send(400, jsonResponse.toString());
-            return 400;
+            resp.send(500, jsonResponse.toString());
+            return 500;
         } finally {
             mongoClient.close();
         }
